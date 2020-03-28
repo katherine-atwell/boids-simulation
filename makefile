@@ -11,8 +11,6 @@ GL_LIB = -framework OpenGL -framework GLUT -framework foundation
 
 TARGETS = viewer fishtank
 
-OBJECTS = kdTree.o
-
 #-----------------------------------------
 
 LIBS = 
@@ -33,11 +31,11 @@ clean:
 #-----------------------------------------
 #-----------------------------------------
 
-viewer: $(OBJECTS) viewer.o
-	$(CC) $(OBJECTS) viewer.o $(LDOPTS) $(GL_LIB) -o viewer
+viewer: viewer.o
+	$(CC) viewer.o $(LDOPTS) $(GL_LIB) -o viewer
 
-fishtank: $(OBJECTS) fishtank.o
-	$(CC) $(OBJECTS) fishtank.o $(LDOPTS) -o fishtank
+fishtank: fishtank.o
+	$(CC) fishtank.o $(LDOPTS) -o fishtank
 
 #-----------------------------------------
 #-----------------------------------------
