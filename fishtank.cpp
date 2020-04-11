@@ -35,7 +35,6 @@ Eigen::Vector3d flock_centering(Boid* b, int num_neighbors, double neighbor_radi
 int main(int argc, char** argv) {
   srand(time(NULL));
 
-  //input validation later
   string input_file_name = argv[1];
   string output_file_name = argv[2];
 
@@ -45,7 +44,7 @@ int main(int argc, char** argv) {
   double size, neighbor_radius, mass, collision, centering, velocity, hunger, damping, dt, length;
   int num_neighbors, num_boids;
   input_file >> size >> neighbor_radius >> num_neighbors >> mass >> collision >> centering >> velocity >> hunger >> damping >> dt >> length;
-  //input_file.ignore(); //ignore newline character
+  
   input_file >> num_boids;
   cout << num_boids << endl;
   input_file.ignore(); //ignore newline character
@@ -66,33 +65,22 @@ int main(int argc, char** argv) {
 
   for (int i=0; i < num_boids; i++) {
     input_file.ignore();
-    //input_file.ignore('[');
+    
     getline(input_file, pos_x_string, ',');
     getline(input_file, pos_y_string, ',');
     getline(input_file, pos_z_string, ']');
 
-    //input_file.ignore(' ');
-    //input_file.ignore('[');
     getline(input_file, vel_x_string, ',');
     getline(input_file, vel_y_string, ',');
     getline(input_file, vel_z_string, ']');
 
-    //cout << pos_z_string << endl;
-    //cout << vel_x_string << endl;
-    //cout << vel_y_string << endl;
-    //cout << vel_z_string << endl;
     pos_x = stod(pos_x_string.substr(1, pos_x_string.length() - 1));
-    //cout << pos_x << endl;
     pos_y = stod(pos_y_string);
     pos_z = stod(pos_z_string);
-    
-    //cout << pos_x << " " << pos_y << " " << pos_z << endl;
 
     vel_x = stod(vel_x_string.substr(2, vel_x_string.length() - 1));
     vel_y = stod(vel_y_string);
     vel_z = stod(vel_z_string);
-
-    //cout << vel_x << " " << vel_y << " " << vel_z << endl;
 
     Eigen::Vector3d position(pos_x, pos_y, pos_z);
     Eigen::Vector3d velocity(vel_x, vel_y, vel_z);
@@ -123,12 +111,10 @@ void change_positions_of_boids(int num_neighbors, double neighbor_radius) {
 
   //traverse boids and apply rules to each boid
   for (int i=0; i < (int) boids.size(); i++) {
-    //b = boids[i];
-    //cout << boids[i]->position << endl;
     v1 = collision_avoidance(boids[i]);
     v2 = velocity_matching(boids[i], num_neighbors, neighbor_radius);
     v3 = flock_centering(boids[i], num_neighbors, neighbor_radius);
-    //cout << v1 << endl << v2 << endl << v3 << endl;
+	  
     boids[i]->velocity = boids[i]->velocity + v1 + v2 + v3;
     boids[i]->velocity = boids[i]->velocity * .999;
 
